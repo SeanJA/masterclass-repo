@@ -4,8 +4,15 @@ namespace Masterclass\Controllers;
 
 use Masterclass\Utils\View;
 
+/**
+ * Class User
+ * @package Masterclass\Controllers
+ */
 class User extends Controller{
 
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function create() {
         $error = null;
         
@@ -69,7 +76,10 @@ class User extends Controller{
         ]);
         
     }
-    
+
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function account() {
         $error = null;
         if(!isset($_SESSION['AUTHENTICATED'])) {
@@ -115,7 +125,10 @@ class User extends Controller{
             'content' => $content
         ]);
     }
-    
+
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function login() {
         $error = null;
         // Do the login
@@ -153,10 +166,14 @@ class User extends Controller{
         ]);
         
     }
-    
+
+    /**
+     * Log the user out
+     */
     public function logout() {
         // Log out, redirect
         session_destroy();
         header("Location: /");
+        exit;
     }
 }

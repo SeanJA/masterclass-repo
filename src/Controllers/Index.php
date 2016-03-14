@@ -2,9 +2,16 @@
 
 namespace Masterclass\Controllers;
 use Masterclass\Utils\View;
- 
+
+/**
+ * Class Index
+ * @package Masterclass\Controllers
+ */
 class Index extends Controller{
-    
+
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function index() {
         
         $sql = 'SELECT * FROM story ORDER BY created_on DESC';

@@ -4,9 +4,16 @@ namespace Masterclass\Controllers;
 
 use Masterclass\Utils\View;
 
+/**
+ * Class Story
+ * @package Masterclass\Controllers
+ */
 class Story extends Controller
 {
 
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function index()
     {
         if (!isset($_GET['id'])) {
@@ -60,6 +67,9 @@ class Story extends Controller
 
     }
 
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function create()
     {
         if (!isset($_SESSION['AUTHENTICATED'])) {

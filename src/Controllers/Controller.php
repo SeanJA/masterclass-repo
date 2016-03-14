@@ -5,6 +5,10 @@ namespace Masterclass\Controllers;
 
 use PDO;
 
+/**
+ * Class Controller
+ * @package Masterclass\Controllers
+ */
 class Controller
 {
     /**

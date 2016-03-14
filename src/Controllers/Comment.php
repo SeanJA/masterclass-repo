@@ -2,8 +2,15 @@
 
 namespace Masterclass\Controllers;
 
+/**
+ * Class Comment
+ * @package Masterclass\Controllers
+ */
 class Comment extends Controller{
-    
+
+    /**
+     * Create a comment and redirect back to the story
+     */
     public function create() {
         if(!isset($_SESSION['AUTHENTICATED'])) {
             header("Location: /");
@@ -18,6 +25,7 @@ class Comment extends Controller{
             filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
         ));
         header("Location: /story/?id=" . $_POST['story_id']);
+        exit;
     }
     
 }
