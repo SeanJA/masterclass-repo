@@ -1,17 +1,11 @@
 <?php
 
-class Comment {
-    
-    public function __construct($config) {
-        $dbconfig = $config['database'];
-        $dsn = 'mysql:host=' . $dbconfig['host'] . ';dbname=' . $dbconfig['name'];
-        $this->db = new PDO($dsn, $dbconfig['user'], $dbconfig['pass']);
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
+namespace Masterclass\Controllers;
+
+class Comment extends Controller{
     
     public function create() {
         if(!isset($_SESSION['AUTHENTICATED'])) {
-            die('not auth');
             header("Location: /");
             exit;
         }
