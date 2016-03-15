@@ -1,17 +1,18 @@
 <?php
 
-class Comment {
-    
-    public function __construct($config) {
-        $dbconfig = $config['database'];
-        $dsn = 'mysql:host=' . $dbconfig['host'] . ';dbname=' . $dbconfig['name'];
-        $this->db = new PDO($dsn, $dbconfig['user'], $dbconfig['pass']);
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    
+namespace Masterclass\Controllers;
+
+/**
+ * Class Comment
+ * @package Masterclass\Controllers
+ */
+class Comment extends Controller{
+
+    /**
+     * Create a comment and redirect back to the story
+     */
     public function create() {
         if(!isset($_SESSION['AUTHENTICATED'])) {
-            die('not auth');
             header("Location: /");
             exit;
         }
@@ -24,6 +25,7 @@ class Comment {
             filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
         ));
         header("Location: /story/?id=" . $_POST['story_id']);
+        exit;
     }
     
 }

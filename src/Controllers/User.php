@@ -1,16 +1,18 @@
 <?php
 
-class User {
-    
-    public $db;
-    
-    public function __construct($config) {
-        $dbconfig = $config['database'];
-        $dsn = 'mysql:host=' . $dbconfig['host'] . ';dbname=' . $dbconfig['name'];
-        $this->db = new PDO($dsn, $dbconfig['user'], $dbconfig['pass']);
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    
+namespace Masterclass\Controllers;
+
+use Masterclass\Utils\View;
+
+/**
+ * Class User
+ * @package Masterclass\Controllers
+ */
+class User extends Controller{
+
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function create() {
         $error = null;
         
@@ -68,11 +70,16 @@ class User {
                 <input type="submit" name="create" value="Create User" />
             </form>
         ';
-        
-        require_once 'layout.phtml';
+
+        View::make('layout', [
+            'content' => $content
+        ]);
         
     }
-    
+
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function account() {
         $error = null;
         if(!isset($_SESSION['AUTHENTICATED'])) {
@@ -99,7 +106,7 @@ class User {
         $dsql = 'SELECT * FROM user WHERE username = ?';
         $stmt = $this->db->prepare($dsql);
         $stmt->execute(array($_SESSION['username']));
-        $details = $stmt->fetch(PDO::FETCH_ASSOC);
+        $details = $stmt->fetch();
         
         $content = '
         ' . $error . '<br />
@@ -113,10 +120,15 @@ class User {
             <label>Password Again</label> <input type="password" name="password_check" value="" /><br />
             <input type="submit" name="updatepw" value="Create User" />
         </form>';
-        
-        require_once 'layout.phtml';
+
+        View::make('layout', [
+            'content' => $content
+        ]);
     }
-    
+
+    /**
+     * @throws \Masterclass\Exceptions\BadViewDataException
+     */
     public function login() {
         $error = null;
         // Do the login
@@ -128,7 +140,7 @@ class User {
             $stmt = $this->db->prepare($sql);
             $stmt->execute(array($username, $password));
             if($stmt->rowCount() > 0) {
-               $data = $stmt->fetch(PDO::FETCH_ASSOC); 
+               $data = $stmt->fetch();
                session_regenerate_id();
                $_SESSION['username'] = $data['username'];
                $_SESSION['AUTHENTICATED'] = true;
@@ -148,14 +160,20 @@ class User {
                 <input type="submit" name="login" value="Log In" />
             </form>
         ';
-        
-        require_once('layout.phtml');
+
+        View::make('layout', [
+            'content' => $content
+        ]);
         
     }
-    
+
+    /**
+     * Log the user out
+     */
     public function logout() {
         // Log out, redirect
         session_destroy();
         header("Location: /");
+        exit;
     }
 }
